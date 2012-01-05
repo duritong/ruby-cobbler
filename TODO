@@ -1,0 +1,6 @@
+This is a list of features to be developed in future.
+
+* Rewrite examples to fit the new style
+
+* Add hierarchical relationships, so that a Profile will load it's 
+  Distro, a System will load it's Profile, etc.

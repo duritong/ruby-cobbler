@@ -1,3 +1,22 @@
+# Copyright (C) 2008 Red Hat, Inc.
+# Written by Darryl L. Pierce <dpierce@redhat.com>
+# Extended 2012 by duritong <peter.meier@immerda.ch>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+# MA  02110-1301, USA.  A copy of the GNU General Public License is
+# also available at http://www.gnu.org/copyleft/gpl.html.
+
 # encoding: utf-8
 
 require 'rubygems'
@@ -11,43 +30,46 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
+
 require 'jeweler'
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
+require 'cobbler'
 Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "ruby-cobbler"
-  gem.homepage = "https://github.com/duritong/ruby-cobbler"
-  gem.license = "MIT"
-  gem.summary = %Q{Use cobbler's API in ruby}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "peter.meier@immerda.ch"
-  gem.authors = ["duritong"]
-  # dependencies defined in Gemfile
+  # gem is a Gem::Specification... see http://docgem.rubygems.org/read/chapter/20 for more options
+  gem.name = 'cobbler'
+  gem.version = "2.0.0"
+  gem.author = 'duritong'
+  gem.email = 'peter.meier@immerda.ch'
+  gem.homepage = 'http://github.com/duritong/ruby-cobbler/'
+  gem.platform = Gem::Platform::RUBY
+  gem.summary = 'An interface for interacting with a Cobbler server.'
+  gem.license = 'GPLv2'
+  gem.description = <<EOF
+  Provides Ruby bindings to interact with a Cobbler server.
+EOF
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
+RSpec::Core::RakeTask.new(:rcov) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
 end
 
-task :default => :test
+task :default => :spec
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
+gem 'rdoc'
+require 'rdoc/task'
+RDoc::Task.new do |rdoc|
+  version = '2.0.0'
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "ruby-cobbler #{version}"
+  rdoc.title = "iuid #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+

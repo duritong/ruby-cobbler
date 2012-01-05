@@ -1,8 +1,76 @@
 = ruby-cobbler
 
-Description goes here.
+Ruby bindings for interacting with Cobbler.
 
-== Contributing to ruby-cobbler
+These bindings were once part of the official cobbler repository. They were
+written by Darryl L. Pierce <dpierce@redhat.com>. However, they got stalled to
+work for cobbler 1.x and no further development was done. Also
+this version was missing a lot of features, like creating various objects etc.
+
+So I took over the development and while the work was done to get it working
+with a more recent cobbler version, but also to add the various missing
+features, the development of cobbler by RedHat stopped and the people continuing
+the work on cobbler decided to drop the ruby gem.
+So I decided to publish that gem on its own, but still keep it under the same
+License as Darryl L. Pierce <dpierce@redhat.com> published it originally.
+
+It is used to talk to a cobbler installation that ships with the latest RedHat
+Satellite and have tested with that.
+It is still a work in progress, but it is used, to create systems, delete systems,
+create and/or import repositories, sync repositories, work with the task engine,
+and so on.
+
+WARNING: It is possible that it does not work with a current cobbler version as
+the author does currently not have access to such an installation nor is any
+work planned to do so.
+Just give it a shot with a newer cobbler and if things don't work: pull requests
+are welcomed! See below.
+
+== USAGE
+
+To use the code, you must install the ruby gem named "cobbler" and then
+require 'cobbler' in your application. 
+
+Minimally you need to provide a server name for your Cobbler machine using:
+
+Cobbler::Base.hostname = my.cobbler.server
+
+If you intend to modify data on the Cobbler server, you'll need to also provide
+a username and password that has authorization:
+
+Cobbler::Base.username = username
+Cobbler::Base.password = password
+
+== Examples
+
+You'll find a few working examples in `examples/`
+
+An example on how to import a distribution is:
+
+    Cobbler::Base.hostname = localhost
+    Cobbler::Base.username = cobbler
+    Cobbler::Base.password = cobbler     
+    log_id = Cobbler::Base.import("/mnt/centos6.iso",'centos6','x86_64', 'breed' => 'redhat')
+    while (event = Cobbler::Base.events[log_id])[2] == 'running' do
+      puts "Current state is: #{event[2]} - #{event.inspect}"
+      sleep 60
+    end
+    puts "Import event: #{event.inspect}"
+    puts "All distros:"
+    Cobbler::Distro.find { |distro| puts "\"#{distro.name}\" is a breed of \"#{distro.breed}\"."}
+
+
+== CONFIGURATION
+
+By default, Cobbler::Base will load the file $SEARCHPATH/config/cobbler.yml,
+if it exists, and use that information for talking to Cobbler. To override 
+where this file lives, set the COBBLER_ENV environment variable *before* 
+requiring the 'cobbler' file. 
+
+However, these values can be overridden afterward by changing the fields in 
+Cobbler::Base directly.
+
+== Contributing to cobbler
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
@@ -14,6 +82,6 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2012 duritong. See LICENSE.txt for
+Copyright (c) 2012 duritong. See COPYING for
 further details.
 
