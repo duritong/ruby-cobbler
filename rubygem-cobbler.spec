@@ -7,7 +7,7 @@
 
 Summary: 	An interface for interacting with a Cobbler server
 Name: 		rubygem-%{gemname}
-Version: 	2.0.0
+Version: 	2.0.1
 Release: 	1%{?dist}
 Group: 		Development/Languages
 License: 	LGPLv2+
@@ -58,6 +58,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu May 08 2014 duritong <peter.meier@immerda.ch> - 2.0.1-1
+- Fix #1 - should not depend on active_support
+
 * Thu Jan 05 2012 duritong <peter.meier@immerda.ch> - 2.0.0-1
 - Fix all issues when API returns ~ on a nonexisting system
 - Add some missing fields to the System model

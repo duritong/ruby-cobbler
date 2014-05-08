@@ -37,7 +37,7 @@ require 'cobbler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docgem.rubygems.org/read/chapter/20 for more options
   gem.name = 'cobbler'
-  gem.version = "2.0.0"
+  gem.version = "2.0.1"
   gem.author = 'duritong'
   gem.email = 'peter.meier@immerda.ch'
   gem.homepage = 'http://github.com/duritong/ruby-cobbler/'
@@ -66,7 +66,7 @@ task :default => :spec
 gem 'rdoc'
 require 'rdoc/task'
 RDoc::Task.new do |rdoc|
-  version = '2.0.0'
+  version = '2.0.1'
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "iuid #{version}"
   rdoc.rdoc_files.include('README*')

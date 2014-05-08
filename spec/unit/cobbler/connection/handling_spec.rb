@@ -17,33 +17,33 @@ describe Cobbler::Connection::Handling do
     it "should provide a way to query the version of the cobbler server" do
         TestConnection.should respond_to(:remote_version)
     end
-    
+
     describe "querying remote version" do
         before(:each) do
             connection = Object.new
             TestConnection.expects(:connect).returns(connection)
             TestConnection.expects(:connection).returns(nil)
-        end        
-        
+        end
+
         it "should return the version" do
             TestConnection.expects(:make_call).with('version').returns("2.0")
             TestConnection.remote_version.should == "2.0"
         end
     end
-    
+
     it "should provide a way to login to the cobbler server" do
         TestConnection.should respond_to(:login)
     end
-    
+
     describe "logging into cobbler server" do
-        
+
         it "should call the login server" do
             TestConnection.username = 'foobar'
             TestConnection.password = 'password'
             TestConnection.expects(:make_call).with('login','foobar','password')
             TestConnection.login
         end
-        
+
         it "should not relogin if we are still logged in" do
             TestConnection.username = 'foobar'
             TestConnection.password = 'password'
@@ -53,26 +53,23 @@ describe Cobbler::Connection::Handling do
             TestConnection.username = 'foobar2'
             TestConnection.password = 'password2'
             TestConnection.expects(:make_call).with('login','foobar2','password2').never
-            TestConnection.login            
+            TestConnection.login
         end
     end
-    it "should provide a way to connect to the cobbler server" do
-        TestConnection.should respond_to(:connect)
-    end
-    
+
     it "should connect to the cobbler server" do
         TestConnection.hostname = 'localhost'
         @connection = Object.new
         XMLRPC::Client.expects(:new2).with('http://localhost/cobbler_api').returns(@connection)
         TestConnection.send(:connect)
     end
-    
+
     describe "making a call" do
         it "should raise an exception if no connection have been established so far" do
             TestConnection.expects(:connection).returns(nil)
             lambda { TestConnection.make_call('foobar') }.should raise_error(Exception)
         end
-        
+
         it "should pass all arguments to the connection and return the resul" do
             connection = Object.new
             connection.expects(:call).with('foo','bar').returns('juhu')
@@ -80,16 +77,16 @@ describe Cobbler::Connection::Handling do
             TestConnection.make_call('foo','bar')
         end
     end
-    
+
     describe "handling transactions" do
         it "should initialze and end a connection" do
             TestConnection.expects(:begin_transaction)
             TestConnection.expects(:end_transaction)
             TestConnection.send(:in_transaction) do
-               # 
+               #
             end
         end
-        
+
         it "should cleanup the connection" do
             TestConnection.expects(:connect).returns('foobar')
             TestConnection.in_transaction do
@@ -97,7 +94,7 @@ describe Cobbler::Connection::Handling do
             end
             TestConnection.send(:connection).should be_nil
         end
-        
+
         it "should login if you want a login and pass the token into the transaction and logout" do
             connection = Object.new
             TestConnection.expects(:login).returns('token')
@@ -105,15 +102,15 @@ describe Cobbler::Connection::Handling do
             TestConnection.expects(:connect).returns('foobar')
             TestConnection.in_transaction(true) do |token|
                token.should == 'token'
-            end            
+            end
         end
-        
+
         it "should ensure that the connection is cleaned up" do
             TestConnection.expects(:connect).returns('foobar')
             lambda { TestConnection.in_transaction do
                 raise "foobar"
             end }.should raise_error(Exception)
-            TestConnection.send(:connection).should be_nil            
+            TestConnection.send(:connection).should be_nil
         end
     end
 end
