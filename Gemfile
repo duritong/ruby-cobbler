@@ -12,6 +12,6 @@ group :development do
   gem "rdoc", "~> 3.8"
   gem "mocha", "~> 0.10.0"
   gem "bundler"
-  gem "jeweler", "~> 1.6.4"
-  gem "simplecov", ">= 0"
+  gem "jeweler"
+  gem "simplecov"
 end
