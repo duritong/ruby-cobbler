@@ -59,6 +59,7 @@ module Cobbler
                     return @api_methods if @api_methods
                     model_name = self.name.gsub(/.*::/,'').underscore
                     @api_methods = {
+                      :copy => "copy_#{model_name}",
                       :find_all => "get_#{model_name.pluralize}",
                       :find_one => "get_#{model_name}",
                       :handle => "get_#{model_name}_handle",
