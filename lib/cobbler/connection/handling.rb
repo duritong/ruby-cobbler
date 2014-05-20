@@ -81,7 +81,9 @@ module Cobbler
                 # Returns a connection to the Cobbler server.
                 def connect
                     debug("Connecting to http://#{hostname}/cobbler_api")
-                    @connection = XMLRPC::Client.new2("http://#{hostname}/cobbler_api")
+                    @connection = XMLRPC::Client.new2("http://#{hostname}/cobbler_api").tap do |client|
+                        client.http_header_extra = { 'Accept-Encoding' => 'identity' }
+                    end
                 end
                 
                 private                
