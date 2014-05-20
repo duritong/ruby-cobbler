@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with rubygem-cobbler.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'active_support/core_ext/module'
 require 'xmlrpc/client'
 
 # +Handling+ provides common methods to handle the xmlrpc connection to the 
@@ -36,7 +37,7 @@ module Cobbler
                 
                 # Set hostname, username, password for the Cobbler server, overriding any settings
                 # from cobbler.yml.
-                attr_accessor :hostname, :username, :password
+                cattr_accessor :hostname, :username, :password
                 
                 # Returns the version for the remote cobbler instance.
                 def remote_version
