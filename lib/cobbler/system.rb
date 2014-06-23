@@ -26,12 +26,12 @@ module Cobbler
     class System < Base
         cobbler_fields :name, :profile, :image, :kickstart, :netboot_enabled, :server, :virt_cpus,
         :virt_file_size, :virt_path, :virt_ram, :virt_auto_boot, :virt_type, :gateway, :hostname
-        
+
         cobbler_collection :kernel_options, :packing => :hash
-        cobbler_collection :ks_meta, :packing => :hash
+        cobbler_collection :ks_meta, :packing => :hash, :store => :store_ksmeta
         cobbler_collection :owners
         cobbler_collection :interfaces, :packing => :hash, :store => :store_interfaces
-        
+
         def store_interfaces(sysid,token)
             interfaces.each do |interface,values|
                 values2store = values.keys.inject({}) do |result,member|
@@ -41,5 +41,12 @@ module Cobbler
                 self.class.make_call('modify_system',sysid,'modify_interface',values2store,token) unless values2store.empty?
             end
         end
+
+        def store_ksmeta(sysid,token)
+            result=''
+            ks_meta.each { |meta,values| result << "#{meta}=#{values} " }
+            self.class.make_call('modify_system',sysid,'ks_meta',result.strip,token) unless result.strip.empty?
+        end
+
     end
 end
