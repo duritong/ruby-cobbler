@@ -60,6 +60,7 @@ require 'cobbler/common/finders'
 # automatically the various API methods if they aren't overwritten.
 # These methods are (defaults are shown for an item called Model):
 #
+# +copy+     - to copy an instance (copy_model)
 # +find_one+ - to find a single instance (get_model)
 # +find_all+ - to find all instances (get_models)
 # +remove+   - to remove an instance (remove_model)
@@ -124,5 +125,18 @@ module Cobbler
                 self.class.make_call(api_methods[:remove],name,token)
             end
         end
+
+        # copy the item on the cobbler server
+        def copy(newname)
+            raise "Not all necessary api methods are defined to process this action!" unless api_methods[:copy]
+            entry = self.class.find_one(name)
+            if entry
+                self.class.in_transaction(true) do |token|
+                    entryid = self.class.make_call(api_methods[:handle],name,token)
+                    self.class.make_call(api_methods[:copy],entryid,newname,token)
+                end
+            end
+        end
+
     end
 end
