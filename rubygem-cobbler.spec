@@ -7,7 +7,7 @@
 
 Summary: 	An interface for interacting with a Cobbler server
 Name: 		rubygem-%{gemname}
-Version: 	2.0.1
+Version: 	2.0.2
 Release: 	1%{?dist}
 Group: 		Development/Languages
 License: 	LGPLv2+
@@ -58,6 +58,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jun 27 2014 duritong <peter.meier@immerda.ch> - 2.0.2-1
+- Fix various problems and add copy support as well as a possibility
+  to store ks_meta
+
 * Thu May 08 2014 duritong <peter.meier@immerda.ch> - 2.0.1-1
 - Fix #1 - should not depend on active_support
 
