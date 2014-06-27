@@ -32,7 +32,9 @@ describe Cobbler::System do
             Cobbler::System.expects(:connect).returns(Object.new)
             Cobbler::System.expects(:make_call).with('get_system_handle','foo','muh').returns('id')
             Cobbler::System.expects(:make_call).with('save_system','id','muh')
-            Cobbler::System.expects(:make_call).with('modify_system','id','ks_meta','meta1=val1 meta2=val2','muh')
+            str = ''
+            @test1.ks_meta.each {|k,v| str << "#{k}=#{v} " }
+            Cobbler::System.expects(:make_call).with('modify_system','id','ks_meta',str.strip,'muh')
             @test1.save
         end
     end

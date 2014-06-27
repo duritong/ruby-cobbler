@@ -3,7 +3,13 @@ source "http://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 
-gem 'activesupport'
+if RUBY_VERSION < "1.9"
+  gem 'activesupport', '~> 3.1.12'
+  gem 'nokogiri', '~> 1.5.0'
+else
+  gem 'activesupport'
+end
+gem 'i18n'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

@@ -40,7 +40,7 @@ end
 
 describe Cobbler::Base do
     
-    [:remove, :save ].each do |method|
+    [:remove, :save, :copy ].each do |method|
         it "should provide a method to #{method} the item" do
             test = BaseTest.new
             test.should respond_to(method)
