@@ -23,5 +23,17 @@ describe Cobbler::System do
             Cobbler::System.expects(:make_call).with('modify_system','id','modify_interface',{"ipaddress-eth1" => '192.168.2.1'},'muh')
             @test1.save
         end
+        it "should store all ks_meta" do
+            @test1 = Cobbler::System.new({'name' => 'foo'},false)
+            @test1.ks_meta = { 'meta1' => 'val1', 'meta2' => 'val2' }
+            Cobbler::System.expects(:login).returns('muh')
+            Cobbler::System.expects(:logout)
+            Cobbler::System.expects(:find_one).with('foo').returns('entry')
+            Cobbler::System.expects(:connect).returns(Object.new)
+            Cobbler::System.expects(:make_call).with('get_system_handle','foo','muh').returns('id')
+            Cobbler::System.expects(:make_call).with('save_system','id','muh')
+            Cobbler::System.expects(:make_call).with('modify_system','id','ks_meta','meta1=val1 meta2=val2','muh')
+            @test1.save
+        end
     end
 end
