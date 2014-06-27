@@ -1,4 +1,5 @@
 = ruby-cobbler
+{<img src="https://api.travis-ci.org/duritong/ruby-cobbler.png" />}[https://travis-ci.org/duritong/ruby-cobbler]
 
 Ruby bindings for interacting with Cobbler.
 
