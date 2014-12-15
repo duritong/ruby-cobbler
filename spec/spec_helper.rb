@@ -12,7 +12,8 @@ end
 def with_real_cobbler(calzz,&blk)
     unless ENV['NO_REAL_COBBLER'] == '1'
         config = (ENV['COBBLER_YML'] || File.expand_path(File.join(File.dirname(__FILE__),'..','config','cobbler.yml')))
-        if File.exist?(config) && (yml = YAML::load(File.open(config))) && (yml['hostname'] && yml['username'] && yml['password'])
+        if File.exist?(config) && (yml = YAML::load(File.open(config))) && (yml['hostname'] && yml['username'] && \
+          yml['password'] && yml['secure'])
             yield(yml)
         else
             puts "No cobbler data found."
