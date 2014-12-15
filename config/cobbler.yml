@@ -3,3 +3,4 @@
 hostname: localhost
 username: cobbler
 password: cobbler
+secure: false
