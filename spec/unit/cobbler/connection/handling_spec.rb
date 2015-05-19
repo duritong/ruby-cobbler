@@ -7,7 +7,7 @@ class TestConnection
 end
 
 describe Cobbler::Connection::Handling do
-    [:hostname, :username, :password].each do |field|
+    [:hostname, :username, :password, :timeout].each do |field|
         it "should provide getters and setters for #{field}" do
             TestConnection.should respond_to(field)
             TestConnection.should respond_to("#{field}=".to_sym)

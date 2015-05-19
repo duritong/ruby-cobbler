@@ -40,6 +40,7 @@ describe Cobbler::Connection::Common do
                 TestConnection.hostname = yml['hostname']
                 TestConnection.username = yml['username']
                 TestConnection.password = yml['password']
+                TestConnection.timeout = yml['timeout']
             end
             
             it "should "

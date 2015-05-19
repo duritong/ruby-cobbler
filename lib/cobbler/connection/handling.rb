@@ -37,7 +37,7 @@ module Cobbler
                 
                 # Set hostname, username, password for the Cobbler server, overriding any settings
                 # from cobbler.yml.
-                mattr_accessor :hostname, :username, :password, :secure, :verify_ssl
+                mattr_accessor :hostname, :username, :password, :secure, :verify_ssl, :timeout
                 
                 # Returns the version for the remote cobbler instance.
                 def remote_version
@@ -82,7 +82,7 @@ module Cobbler
                 # Returns a connection to the Cobbler server.
                 def connect
                     debug("Connecting to #{protocol}://#{hostname}/cobbler_api")
-                    @connection = XMLRPC::Client.new2("#{protocol}://#{hostname}/cobbler_api").tap do |client|
+                    @connection = XMLRPC::Client.new2("#{protocol}://#{hostname}/cobbler_api",nil,timeout).tap do |client|
                         client.http_header_extra = { 'Accept-Encoding' => 'identity' } if client.respond_to?(:http_header_extra=)
                         if secure && no_verify_ssl
                             client.instance_variable_get(:@http).instance_variable_set(:@verify_mode, OpenSSL::SSL::VERIFY_NONE)
