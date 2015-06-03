@@ -60,7 +60,7 @@ describe Cobbler::Connection::Handling do
     it "should connect to the cobbler server" do
         TestConnection.hostname = 'localhost'
         @connection = Object.new
-        XMLRPC::Client.expects(:new2).with('http://localhost/cobbler_api').returns(@connection)
+        XMLRPC::Client.expects(:new2).with('http://localhost/cobbler_api',nil,nil).returns(@connection)
         TestConnection.send(:connect)
     end
 
