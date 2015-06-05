@@ -6,6 +6,7 @@ source "http://rubygems.org"
 if RUBY_VERSION < "1.9"
   gem 'activesupport', '~> 3.1.12'
   gem 'nokogiri', '~> 1.5.0'
+  gem 'highline', '~> 1.6.21'
 else
   gem 'activesupport'
 end
