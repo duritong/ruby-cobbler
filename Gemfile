@@ -7,10 +7,11 @@ if RUBY_VERSION < "1.9"
   gem 'activesupport', '~> 3.1.12'
   gem 'nokogiri', '~> 1.5.0'
   gem 'highline', '~> 1.6.21'
+  gem 'i18n', '~> 0.6.11'
 else
   gem 'activesupport'
+  gem 'i18n'
 end
-gem 'i18n'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
