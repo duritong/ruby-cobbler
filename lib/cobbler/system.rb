@@ -25,7 +25,7 @@
 module Cobbler
     class System < Base
         cobbler_fields :name, :profile, :image, :kickstart, :netboot_enabled, :server, :virt_cpus,
-        :virt_file_size, :virt_path, :virt_ram, :virt_auto_boot, :virt_type, :gateway, :hostname, :timeout
+        :virt_file_size, :virt_path, :virt_ram, :virt_auto_boot, :virt_type, :gateway, :hostname, :name_servers, :timeout
 
         cobbler_collection :kernel_options, :packing => :hash
         cobbler_collection :ks_meta, :packing => :hash, :store => :store_ksmeta
