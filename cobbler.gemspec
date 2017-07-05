@@ -65,10 +65,15 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+if RUBY_VERSION < "1.9"
       s.add_runtime_dependency(%q<activesupport>, ["~> 3.1.12"])
       s.add_runtime_dependency(%q<nokogiri>, ["~> 1.5.0"])
       s.add_runtime_dependency(%q<highline>, ["~> 1.6.21"])
       s.add_runtime_dependency(%q<i18n>, ["~> 0.6.11"])
+else
+      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
+      s.add_runtime_dependency(%q<i18n>, [">= 0"])
+end
       s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.8"])
       s.add_development_dependency(%q<mocha>, ["~> 0.10.0"])
@@ -76,10 +81,15 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
     else
+if RUBY_VERSION < "1.9"
       s.add_dependency(%q<activesupport>, ["~> 3.1.12"])
       s.add_dependency(%q<nokogiri>, ["~> 1.5.0"])
       s.add_dependency(%q<highline>, ["~> 1.6.21"])
       s.add_dependency(%q<i18n>, ["~> 0.6.11"])
+else
+      s.add_dependency(%q<activesupport>, [">= 0"])
+      s.add_dependency(%q<i18n>, [">= 0"])
+end
       s.add_dependency(%q<rspec>, ["~> 2.5.0"])
       s.add_dependency(%q<rdoc>, ["~> 3.8"])
       s.add_dependency(%q<mocha>, ["~> 0.10.0"])
@@ -88,16 +98,22 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<simplecov>, [">= 0"])
     end
   else
+if RUBY_VERSION < "1.9"
     s.add_dependency(%q<activesupport>, ["~> 3.1.12"])
     s.add_dependency(%q<nokogiri>, ["~> 1.5.0"])
     s.add_dependency(%q<highline>, ["~> 1.6.21"])
     s.add_dependency(%q<i18n>, ["~> 0.6.11"])
+else
+    s.add_dependency(%q<activesupport>, [">= 0"])
+    s.add_dependency(%q<i18n>, [">= 0"])
+end
     s.add_dependency(%q<rspec>, ["~> 2.5.0"])
     s.add_dependency(%q<rdoc>, ["~> 3.8"])
     s.add_dependency(%q<mocha>, ["~> 0.10.0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
+end
   end
 end
 
